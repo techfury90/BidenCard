@@ -1,0 +1,65 @@
+Name            TC3_1V4_T3_SRAM;
+Partno          ;
+Revision        03;
+Date            11/16/2023;
+Designer        Alvaro ALea, techfury, tetroid, Miracle Systems;
+Company         None;
+Location        None;
+Assembly        None;
+Device          g16v8;
+
+/* Inputs */
+pin 1 = !DSL;      /*  */
+pin 2 = A19;      /*  */
+pin 3 = A18;      /*  */
+pin 4 = A17;      /*  */
+pin 5 = A16;      /*  */
+pin 6 = A15;      /*  */
+pin 7 = !RST;      /*  */
+pin 8 = A14;      /*  */
+pin 9 = A13;      /*  */
+pin 11 = MUX;      /*  */
+
+/* Outputs */
+pin 12 = !DSMC;     /*  */
+pin 13 = !P13;      /*  */
+pin 14 = !SRAM_CS1;    /*  */
+pin 15 = !SRAM_CS2;      /*  */
+pin 17 = !FDC_CS;   /*  */
+pin 18 = !U17_CS;   /*  */
+pin 19 = !ROM_CS;   /*  */
+
+/* Pinnodes */
+pinnode 16 = !P16;      /*  */
+
+/* equations */
+SRAM_CS1 = ((DSL & (!A19 & A18))
+      # (DSL & A19 & !A18));
+SRAM_CS2 = ( (DSL & A19 & A18 & A17)
+	# (DSL & A19 & A18 & !A17 & !P13) );
+
+/* (DSL & A19 & A18 & !P13); */
+
+U17_CS = (!A19 & !A18 & !A17 & A16 & A15 & A14 & A13 & DSL);
+FDC_CS = (!A19 & !A18 & !A17 & A16 & A15 & A14 & !A13 & DSL);
+
+ROM_CS = ((!A19 & DSL & !A18 & !A17 & A16 & !A15)
+	#(A19 & DSL & A18 & !A17 & !A16 & !A15 & P13));
+
+DSMC = ((!A19 & !A18 & !A17 & !A16)
+      # (!A19 & !A18 & !A17 & A16 & A15 & !A14)
+      # (!A19 & !A18 & A17)
+      # (A19 & A18 & !A17 & !A16 & A15 & P13)
+      # (A19 & A18 & !A17 & A16 & P13)); 
+
+
+P16 = (( DSL & !A19 & !A18 & !A17 & A16 & !A15 & !A14 )
+      # ( P16 & !RST ));
+
+P13 = (( DSL & !A19 & !A18 & !A17 & !A16 & A15 & A14 & !P16)
+      # (  A19 & !RST & P13 )
+      # (  A18 & !RST & P13 )
+      # (  A17 & !RST & P13 )
+      # ( !A16 & !RST & P13 )
+      # (  A15 & !RST & P13 )
+      # (  !DSL & !RST & P13 ));
