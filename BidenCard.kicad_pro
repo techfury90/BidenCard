@@ -536,7 +536,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "BidenCard.net",
-      "plot": "./Gerbers_JLCCompliant_2/",
+      "plot": "./Gerbers_JLC/",
       "pos_files": "",
       "specctra_dsn": "ql_trump_v2_disk_interface.dsn",
       "step": "qdisk_v4.step",
